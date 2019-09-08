@@ -132,9 +132,7 @@ We appreciate all contributions to improve MMDetection. Please refer to [CONTRIB
 
 ## Acknowledgement
 
-MMDetection is an open source project that is contributed by researchers and engineers from various colleges and companies. We appreciate all the contributors who implement their methods or add new features, as well as users who give valuable feedbacks.
-We wish that the toolbox and benchmark could serve the growing research community by providing a flexible toolkit to reimplement existing methods and develop their own new detectors.
-
+MMDetection is an open source project that is contributed by researchers and engineers from various colleges and companies. 
 
 ## Citation
 
@@ -153,8 +151,3 @@ If you use this toolbox or benchmark in your research, please cite this project.
   year={2019}
 }
 ```
-
-
-## Contact
-
-This repo is currently maintained by Kai Chen ([@hellock](http://github.com/hellock)), Jiangmiao Pang ([@OceanPang](https://github.com/OceanPang)), Jiaqi Wang ([@myownskyW7](https://github.com/myownskyW7)) and Yuhang Cao ([@yhcao6](https://github.com/yhcao6)).

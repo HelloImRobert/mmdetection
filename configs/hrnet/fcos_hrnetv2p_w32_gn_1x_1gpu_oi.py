@@ -37,7 +37,7 @@ model = dict(
         num_outs=5),
     bbox_head=dict(
         type='FCOSHead',
-        num_classes=81,
+        num_classes=15,
         in_channels=256,
         stacked_convs=4,
         feat_channels=256,
@@ -76,7 +76,7 @@ img_norm_cfg = dict(
 train_pipeline = [
     dict(type='LoadImageFromFile'),
     dict(type='LoadAnnotations', with_bbox=True),
-    dict(type='Resize', img_scale=(1333, 800), keep_ratio=True),
+    dict(type='Resize', img_scale=(667, 400), keep_ratio=True),
     dict(type='RandomFlip', flip_ratio=0.5),
     dict(type='Normalize', **img_norm_cfg),
     dict(type='Pad', size_divisor=32),
@@ -87,7 +87,7 @@ test_pipeline = [
     dict(type='LoadImageFromFile'),
     dict(
         type='MultiScaleFlipAug',
-        img_scale=(853, 512),
+        img_scale=(667, 400),
         #img_scale=(1333, 800),
         flip=False,
         transforms=[
@@ -100,7 +100,7 @@ test_pipeline = [
         ])
 ]
 data = dict(
-    imgs_per_gpu=2,
+    imgs_per_gpu=7,
     workers_per_gpu=4,
     train=dict(
         type=dataset_type,
@@ -120,7 +120,7 @@ data = dict(
 # optimizer
 optimizer = dict(
     type='SGD',
-    lr=0.01,
+    lr=0.001,
     momentum=0.9,
     weight_decay=0.0001,
     paramwise_options=dict(bias_lr_mult=2., bias_decay_mult=0.))
@@ -129,10 +129,10 @@ optimizer_config = dict(grad_clip=None)
 lr_config = dict(
     policy='step',
     warmup='constant',
-    warmup_iters=1000,
-    warmup_ratio=1.0 / 10,
-    step=[10, 15, 18])
-checkpoint_config = dict(interval=1)
+    warmup_iters=500,
+    warmup_ratio=1.0 / 5,
+    step=[60, 75, 78])
+checkpoint_config = dict(interval=5)
 # yapf:disable
 log_config = dict(
     interval=100,
@@ -142,11 +142,11 @@ log_config = dict(
     ])
 # yapf:enable
 # runtime settings
-total_epochs = 19
+total_epochs = 80
 device_ids = range(1)
 dist_params = dict(backend='nccl')
 log_level = 'INFO'
-work_dir = './work_dirs/fcos_hrnetv2p_w32_gn_1x_4gpu'
+work_dir = './work_dirs/fcos_hrnetv2p_w32_gn_1x_1gpu_oi'
 load_from = None
 resume_from = None
 workflow = [('train', 1)]

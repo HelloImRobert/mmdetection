@@ -74,6 +74,7 @@ def show_result_viz(img,
     boxes = boxes[indices]
     labels = labels[indices]
     scores = scores[indices]
+    print(labels)
 
     drawn_image = draw_boxes(img, boxes, labels, scores, class_names).astype(np.uint8)
     Image.fromarray(drawn_image).save(out_file)
@@ -175,12 +176,14 @@ def main():
     parser = argparse.ArgumentParser(description="Demo.")
     parser.add_argument(
         "--config_file",
-        default='../configs/hrnet/cascade_rcnn_hrnetv2p_w32_20e.py',
+        #default='../configs/hrnet/cascade_rcnn_hrnetv2p_w32_20e.py',
+        default='../configs/hrnet/fcos_hrnetv2p_w32_gn_1x_1gpu_oi.py',
         metavar="FILE",
         help="path to config file",
         type=str,
     )
-    parser.add_argument("--ckpt", type=str, default='../checkpoints/cascade_rcnn_hrnetv2p_w32_20e_20190522-55bec4ee.pth', help="Trained weights.")
+    #parser.add_argument("--ckpt", type=str, default='../checkpoints/cascade_rcnn_hrnetv2p_w32_20e_20190522-55bec4ee.pth', help="Trained weights.")
+    parser.add_argument("--ckpt", type=str, default='../work_dirs/fcos_hrnetv2p_w32_gn_1x_1gpu_oi/latest.pth', help="Trained weights.")
     parser.add_argument("--score_threshold", type=float, default=0.5)
     parser.add_argument("--images_dir", default='inputs', type=str, help='Specify a image dir to do prediction.')
     parser.add_argument("--output_dir", default='results', type=str, help='Specify a image dir to save predicted images.')

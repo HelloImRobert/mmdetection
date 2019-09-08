@@ -7,21 +7,27 @@ from .registry import DATASETS
 
 @DATASETS.register_module
 class OiDataset(CustomDataset):
+    CLASSES = None
 
-    CLASSES = ('person', 'bicycle', 'car', 'motorcycle', 'airplane', 'bus',
-               'train', 'truck', 'boat', 'traffic_light', 'fire_hydrant',
-               'stop_sign', 'parking_meter', 'bench', 'bird', 'cat', 'dog',
-               'horse', 'sheep', 'cow', 'elephant', 'bear', 'zebra', 'giraffe',
-               'backpack', 'umbrella', 'handbag', 'tie', 'suitcase', 'frisbee',
-               'skis', 'snowboard', 'sports_ball', 'kite', 'baseball_bat',
-               'baseball_glove', 'skateboard', 'surfboard', 'tennis_racket',
-               'bottle', 'wine_glass', 'cup', 'fork', 'knife', 'spoon', 'bowl',
-               'banana', 'apple', 'sandwich', 'orange', 'broccoli', 'carrot',
-               'hot_dog', 'pizza', 'donut', 'cake', 'chair', 'couch',
-               'potted_plant', 'bed', 'dining_table', 'toilet', 'tv', 'laptop',
-               'mouse', 'remote', 'keyboard', 'cell_phone', 'microwave',
-               'oven', 'toaster', 'sink', 'refrigerator', 'book', 'clock',
-               'vase', 'scissors', 'teddy_bear', 'hair_drier', 'toothbrush')
+    def __init__(self, *args, **kwargs):
+        #raise NotImplementedError
+        # initialize name list
+
+        classes = []
+        for i in range(601):
+            idx = i + 1
+            classes.append(str(idx))
+
+        # dirty workaround
+        classes[1-1] = 'FACE'
+        classes[2-1] = 'PLATE'
+        classes[3-1] = 'SIGN'
+        classes[4 - 1] = 'TLIGHT'
+        classes[4 - 1] = 'LAMP'
+
+        self.CLASSES = tuple(classes)
+        super().__init__(*args, **kwargs)
+
 
     def load_annotations(self, ann_file):
         self.coco = COCO(ann_file)
@@ -36,6 +42,7 @@ class OiDataset(CustomDataset):
             info = self.coco.loadImgs([i])[0]
             info['filename'] = info['file_name']
             img_infos.append(info)
+
         return img_infos
 
     def get_ann_info(self, idx):

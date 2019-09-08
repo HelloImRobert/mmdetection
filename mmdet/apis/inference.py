@@ -135,6 +135,7 @@ def show_result(img,
         for i, bbox in enumerate(bbox_result)
     ]
     labels = np.concatenate(labels)
+
     mmcv.imshow_det_bboxes(
         img,
         bboxes,
